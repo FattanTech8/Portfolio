@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuttavio Ferdiandra — Portfolio</title>
+<meta name="description" content="Yuttavio Ferdiandra (Fattan) — Cybersecurity & Digital Forensics graduate from UWE Bristol. Open to graduate opportunities in the UK and worldwide.">
+<meta name="author" content="Yuttavio Ferdiandra">
+<meta property="og:title" content="Yuttavio Ferdiandra — Cybersecurity Portfolio">
+<meta property="og:description" content="Cybersecurity & Digital Forensics graduate from UWE Bristol. Navigating the Digital World, One Step at a Time.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #090909;
+    --s1:        #0f0f10;
+    --s2:        #141416;
+    --s3:        #1a1a1d;
+    --gold:      #c8a45a;
+    --gold-d:    #c8a45a14;
+    --gold-m:    #c8a45a45;
+    --gold-b:    #e2c07a;
+    --teal:      #4db8a0;
+    --teal-d:    #4db8a014;
+    --red:       #e05c5c;
+    --text:      #ece8e0;
+    --mid:       #a09c94;
+    --dim:       #55514d;
+    --border:    #1e1e22;
+    --border2:   #2a2a30;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* Noise grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* Ambient glow */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 40% at 15% 5%,  #c8a45a0c 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 85% 95%, #4db8a009 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px clamp(20px, 6vw, 100px);
+    transition: all 0.35s ease;
+  }
+  nav.stuck {
+    background: rgba(9,9,9,0.88);
+    backdrop-filter: blur(14px);
+    padding: 14px clamp(20px, 6vw, 100px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── SHARED ── */
+  .wrap { 
+    position: relative; 
+    z-index: 1; 
+    padding: 110px clamp(20px, 8vw, 120px);
+  }
+  .wrap-alt { background: var(--s1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+  .sec-num {
+    font-size: 10px;
+    color: var(--gold);
+    opacity: 0.55;
+    letter-spacing: 0.1em;
+  }
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .sec-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 12px;
+  }
+
+  /* reveal on scroll */
+  .r {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .r.on { opacity: 1; transform: translateY(0); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 clamp(20px, 8vw, 120px);
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: up 0.7s 0.2s ease forwards;
+  }
+  .hero-label::before { content:''; width:28px; height:1px; background:var(--gold); }
+
+  .hero-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 9vw, 108px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    opacity: 0;
+    animation: up 0.7s 0.35s ease forwards;
+  }
+  .hero-h1 em { color: var(--gold); font-style: italic; }
+
+  .hero-sub {
+    margin-top: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 2vw, 19px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--mid);
+    opacity: 0;
+    animation: up 0.7s 0.5s ease forwards;
+  }
+
+  .hero-tagline {
+    margin-top: 28px;
+    font-size: clamp(13px, 1.6vw, 16px);
+    color: var(--mid);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    max-width: 440px;
+    line-height: 1.65;
+    opacity: 0;
+    animation: up 0.7s 0.65s ease forwards;
+  }
+
+  .hero-pills {
+    margin-top: 36px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: up 0.7s 0.8s ease forwards;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    background: var(--s2);
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.08em;
+  }
+  .pill .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: blink 2.2s infinite;
+  }
+  .pill .dot.t { background: var(--teal); animation-delay: 0.4s; }
+  .pill .dot.b { background: var(--teal); animation-delay: 0.8s; }
+
+  @keyframes blink {
+    0%,100% { opacity:1; } 50% { opacity:0.25; }
+  }
+
+  .hero-btns {
+    margin-top: 48px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: up 0.7s 0.95s ease forwards;
+  }
+  .btn {
+    padding: 11px 26px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.22s ease;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+  }
+  .btn-g { background: var(--gold); color: #090909; font-weight: 500; }
+  .btn-g:hover { background: var(--gold-b); transform: translateY(-2px); }
+  .btn-o { background: transparent; color: var(--mid); border: 1px solid var(--border2); }
+  .btn-o:hover { border-color: var(--gold-m); color: var(--gold); transform: translateY(-2px); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 36px;
+    left: clamp(20px, 8vw, 120px);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: up 0.7s 1.3s ease forwards;
+  }
+  .scroll-cue span {
+    width: 36px; height: 1px;
+    background: var(--dim);
+    display: block;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media(max-width:700px){ .about-grid { grid-template-columns:1fr; gap:40px; } }
+
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--s3);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--gold-d), transparent 60%);
+  }
+  .about-photo-icon { font-size: 32px; opacity: 0.3; }
+
+  .about-body p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 1.8vw, 19px);
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.85;
+    margin-bottom: 22px;
+  }
+  .about-body p strong { color: var(--text); font-weight: 400; }
+  .about-body p .g { color: var(--gold); font-style: italic; }
+
+  .about-facts {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media(max-width:480px){ .about-facts { grid-template-columns:1fr; } }
+
+  .af {
+    padding: 14px 16px;
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    border-left: 2px solid var(--gold-m);
+  }
+  .af-l {
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 4px;
+  }
+  .af-v {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-box {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .edu-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-m), transparent);
+  }
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2.8vw, 28px);
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .edu-uni { font-size: 11px; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 3px; }
+  .edu-period { font-size: 10px; color: var(--dim); margin-bottom: 24px; }
+
+  .ncsc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    background: var(--gold-d);
+    border: 1px solid var(--gold-m);
+    border-radius: 2px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 36px;
+  }
+
+  .yr-label {
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 10px;
+    margin-top: 26px;
+  }
+  .mods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mod {
+    padding: 7px 12px;
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-size: 10px;
+    color: var(--dim);
+    transition: all 0.2s;
+  }
+  .mod:hover { border-color: var(--gold-m); color: var(--mid); }
+  .mod.y3 { border-color: var(--gold-m); color: var(--mid); background: var(--gold-d); }
+  .mod.active { border-color: var(--teal); color: var(--teal); background: var(--teal-d); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .sk {
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 22px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .sk:hover { border-color: var(--border2); transform: translateY(-3px); }
+  .sk-icon { font-size: 22px; margin-bottom: 12px; }
+  .sk-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .sk-desc { font-size: 10px; color: var(--dim); line-height: 1.65; margin-bottom: 14px; }
+  .sk-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-size: 8px;
+    padding: 3px 7px;
+    border-radius: 1px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tag-g { background: var(--gold-d); color: var(--gold); }
+  .tag-t { background: var(--teal-d); color: var(--teal); }
+
+  /* ── PROJECTS ── */
+  .proj-list { display: flex; flex-direction: column; gap: 14px; }
+  .proj {
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 30px 34px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .proj:hover { border-color: var(--border2); }
+  .proj::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-m), transparent);
+  }
+  .proj-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .proj-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 2vw, 22px);
+    font-weight: 400;
+    color: var(--text);
+  }
+  .badge {
+    font-size: 8px;
+    padding: 4px 9px;
+    border-radius: 2px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+  .badge-live { background: var(--teal-d); color: var(--teal); border: 1px solid #4db8a040; }
+  .badge-done { background: var(--gold-d); color: var(--gold); border: 1px solid var(--gold-m); }
+  .proj-desc { font-size: 11px; color: var(--dim); line-height: 1.72; max-width: 620px; margin-bottom: 16px; }
+  .proj-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+
+  /* ── CERTIFICATIONS ── */
+  .cert-coming {
+    border: 1px dashed var(--border2);
+    border-radius: 5px;
+    padding: 48px;
+    text-align: center;
+  }
+  .cert-icon { font-size: 36px; margin-bottom: 16px; opacity: 0.35; }
+  .cert-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+  .cert-sub { font-size: 10px; color: var(--dim); line-height: 1.7; }
+  .cert-targets {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .cert-target {
+    padding: 6px 14px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── INITIATIVES ── */
+  .init-card {
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 34px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+  .init-card:hover { border-color: var(--border2); }
+  .init-logo {
+    width: 60px; height: 60px;
+    background: var(--gold-d);
+    border: 1px solid var(--gold-m);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .init-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .init-handle { font-size: 10px; color: var(--gold); margin-bottom: 12px; letter-spacing: 0.08em; }
+  .init-desc { font-size: 11px; color: var(--dim); line-height: 1.72; margin-bottom: 14px; }
+  .init-collab {
+    font-size: 10px;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .init-collab::before { content:''; width:16px; height:1px; background:var(--border2); }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media(max-width:680px){ .contact-inner { grid-template-columns:1fr; gap:40px; } }
+
+  .contact-left .big {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .contact-left .big em { color: var(--gold); }
+  .contact-left p { font-size: 11px; color: var(--dim); line-height: 1.75; }
+
+  .contact-links { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .cl {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: inherit;
+  }
+  .cl:hover { border-color: var(--gold-m); transform: translateX(4px); }
+  .cl-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+  .cl-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); margin-bottom: 2px; }
+  .cl-val { font-size: 12px; color: var(--mid); }
+  .cl:hover .cl-val { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 24px clamp(20px, 8vw, 120px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  footer p { font-size: 9px; color: var(--dim); letter-spacing: 0.1em; }
+  footer .g { color: var(--gold); }
+
+  /* ── KEYFRAMES ── */
+  @keyframes up {
+    from { opacity:0; transform: translateY(18px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* mobile nav */
+  @media(max-width:560px){
+    .nav-links li:nth-child(n+4){ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-name">YFF</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ①  HERO -->
+<section id="hero">
+  <div class="hero-label">Cybersecurity &amp; Digital Forensics</div>
+  <h1 class="hero-h1">Yuttavio<br><em>Ferdiandra</em></h1>
+  <p class="hero-sub">Call me Fattan</p>
+  <p class="hero-tagline">"Navigating the Digital World,<br>One Step at a Time"</p>
+  <div class="hero-pills">
+    <div class="pill"><span class="dot"></span>UWE Bristol, UK</div>
+    <div class="pill"><span class="dot t"></span>Final Year Student</div>
+    <div class="pill"><span class="dot b"></span>Open to Opportunities</div>
+  </div>
+  <div class="hero-btns">
+    <a href="#about" class="btn btn-g">Get to Know Me</a>
+    <a href="#contact" class="btn btn-o">Let's Connect</a>
+  </div>
+  <div class="scroll-cue"><span></span>Scroll to explore</div>
+</section>
+
+<!-- ②  ABOUT -->
+<section id="about" class="wrap-alt">
+  <div class="wrap" style="padding-top:80px;padding-bottom:80px;">
+    <div class="sec-head r">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">About Me</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-body r">
+        <p>My interest in cybersecurity started young — watching action films where <strong>technology was the weapon, the key, and the solution</strong>. That curiosity led me to Computer Science in high school and eventually across the world to <strong>UWE Bristol</strong>, where I've spent three years turning that excitement into real skills.</p>
+        <p>Originally from <strong>Jakarta, Indonesia</strong>, studying abroad was the best decision I ever made. It taught me <span class="g">resilience, independence, and the courage to face discomfort</span> — lessons no classroom could fully teach.</p>
+        <p>To me, cybersecurity is both protection and exploration — <span class="g">defending what matters, understanding how things break</span>, and staying curious in a world that never stops changing.</p>
+        <p>I'm not just building a career. I'm building a life with no borders.</p>
+        <div class="about-facts">
+          <div class="af"><div class="af-l">Currently</div><div class="af-v">Final Year BSc Student</div></div>
+          <div class="af"><div class="af-l">Based In</div><div class="af-v">Bristol, UK</div></div>
+          <div class="af"><div class="af-l">From</div><div class="af-v">Jakarta, Indonesia</div></div>
+          <div class="af"><div class="af-l">Seeking</div><div class="af-v">Graduate Roles · UK &amp; Global</div></div>
+          <div class="af"><div class="af-l">Interests</div><div class="af-v">Cybersecurity · Digital Forensics · Video Editing · Cars  </div></div>
+          <div class="af"><div class="af-l">Languages</div><div class="af-v">Indonesian · English</div></div>
+        </div>
+      </div>
+      <div class="about-photo r">
+        <div class="about-photo-icon">🧑‍💻</div>
+        <span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;position:relative;z-index:1;">Photo Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③  EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head r">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Education</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="edu-box r">
+      <div class="edu-degree">BSc (Hons) Cybersecurity &amp; Digital Forensics</div>
+      <div class="edu-uni">University of the West of England · Bristol, United Kingdom</div>
+      <div class="edu-period">September 2023 — June 2026</div>
+      <div class="ncsc-badge">⭐ NCSC Gold Academic Centre of Excellence · One of only 7 in the UK</div>
+
+      <div class="yr-label">Year 1 — Foundations</div>
+      <div class="mods">
+        <span class="mod">Programming in C/C++</span>
+        <span class="mod">Introduction to Database</span>
+        <span class="mod">Computer Crime &amp; Digital Evidence</span>
+        <span class="mod">Computer &amp; Network Systems</span>
+      </div>
+
+      <div class="yr-label">Year 2 — Core Technical Skills</div>
+      <div class="mods">
+        <span class="mod">Operating Systems</span>
+        <span class="mod">Secure Computer Networks</span>
+        <span class="mod">Security &amp; Forensic Tools</span>
+        <span class="mod">Internet of Things</span>
+        <span class="mod">Data Science for Cybersecurity</span>
+      </div>
+
+      <div class="yr-label">Year 3 — Advanced &amp; Specialisation</div>
+      <div class="mods">
+        <span class="mod y3">Cybersecurity Engineering</span>
+        <span class="mod y3">Forensic Computing Practice</span>
+        <span class="mod y3">Global Landscape of Cyber Security &amp; Adversaries</span>
+        <span class="mod active">Security Management in Practice ↗ In Progress</span>
+        <span class="mod active">Cybersecurity Project — Dissertation ↗ In Progress</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④  SKILLS -->
+<section id="skills" class="wrap-alt">
+  <div class="wrap" style="padding-top:80px;padding-bottom:80px;">
+    <div class="sec-head r">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Skills &amp; Tools</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="sk r">
+        <div class="sk-icon">🔍</div>
+        <div class="sk-name">Digital Forensics</div>
+        <div class="sk-desc">Acquisition and analysis of digital evidence, forensic investigation of compromised systems.</div>
+        <div class="sk-tags">
+          <span class="tag tag-g">Autopsy</span>
+          <span class="tag tag-g">FTK</span>
+          <span class="tag tag-g">Wireshark</span>
+        </div>
+      </div>
+      <div class="sk r">
+        <div class="sk-icon">🛡️</div>
+        <div class="sk-name">Network Security</div>
+        <div class="sk-desc">Network analysis, monitoring, traffic inspection and intrusion detection.</div>
+        <div class="sk-tags">
+          <span class="tag tag-t">Nmap</span>
+          <span class="tag tag-t">Snort</span>
+          <span class="tag tag-t">Wireshark</span>
+        </div>
+      </div>
+      <div class="sk r">
+        <div class="sk-icon">⚙️</div>
+        <div class="sk-name">Security Tools</div>
+        <div class="sk-desc">Hands-on use of industry-standard penetration testing and offensive security tools.</div>
+        <div class="sk-tags">
+          <span class="tag tag-g">Kali Linux</span>
+          <span class="tag tag-g">Burp Suite</span>
+          <span class="tag tag-g">Metasploit</span>
+          <span class="tag tag-g">Splunk</span>
+        </div>
+      </div>
+      <div class="sk r">
+        <div class="sk-icon">💻</div>
+        <div class="sk-name">Programming</div>
+        <div class="sk-desc">Foundational programming and scripting for security applications and automation.</div>
+        <div class="sk-tags">
+          <span class="tag tag-t">C / C++</span>
+          <span class="tag tag-t">Python</span>
+          <span class="tag tag-t">SQL</span>
+        </div>
+      </div>
+      <div class="sk r">
+        <div class="sk-icon">🌐</div>
+        <div class="sk-name">Cyber Intelligence</div>
+        <div class="sk-desc">Understanding global threat landscapes, adversary tactics and strategic security management.</div>
+        <div class="sk-tags">
+          <span class="tag tag-g">MITRE ATT&amp;CK</span>
+          <span class="tag tag-g">OSINT</span>
+          <span class="tag tag-g">ISO 27001</span>
+        </div>
+      </div>
+      <div class="sk r">
+        <div class="sk-icon">🤖</div>
+        <div class="sk-name">Emerging Threats</div>
+        <div class="sk-desc">Research into AI-generated synthetic media, deepfake detection and digital media forensics.</div>
+        <div class="sk-tags">
+          <span class="tag tag-t">Deepfake Detection</span>
+          <span class="tag tag-t">AI Security</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤  PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head r">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Projects / Experience</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="proj-list">
+      <div class="proj r">
+        <div class="proj-top">
+          <h3 class="proj-name">Deepfakes — Cybersecurity Dissertation</h3>
+          <span class="badge badge-live">In Progress</span>
+        </div>
+        <p class="proj-desc">Final year dissertation investigating deepfake technology through a cybersecurity lens — exploring AI-generated synthetic media, detection methodologies, forensic implications, and the evolving threat landscape surrounding manipulated digital content.</p>
+        <div class="proj-tags">
+          <span class="tag tag-g">Digital Forensics</span>
+          <span class="tag tag-g">AI / Deepfakes</span>
+          <span class="tag tag-t">Research</span>
+          <span class="tag tag-t">UWE Bristol</span>
+        </div>
+      </div>
+      <div class="proj r">
+        <div class="proj-top">
+          <h3 class="proj-name">Forensic Computing Practice</h3>
+          <span class="badge badge-done">Completed</span>
+        </div>
+        <p class="proj-desc">Practical digital investigation covering evidence acquisition, chain of custody procedures, and forensic analysis of compromised systems and storage media using industry-standard forensic toolkits.</p>
+        <div class="proj-tags">
+          <span class="tag tag-g">LIVE RAM CAPTURE</span>
+          <span class="tag tag-g">CHAIN OF CUSTODY</span>
+          <span class="tag tag-t">CRIME SCENE</span>
+          <span class="tag tag-t">PHOTOGRAPHER</span>
+        </div>
+      </div>
+      <div class="proj r">
+        <div class="proj-top">
+          <h3 class="proj-name">USB Rubber Ducky</h3>
+          <span class="badge badge-done">Completed</span>
+        </div>
+        <p class="proj-desc">Secure Computer Network Assessment, Designing a USB Rubber Ducky with a Pico Pi containing a payload</p>
+        <div class="proj-tags">
+          <span class="tag tag-g">CyBok</span>
+          <span class="tag tag-g">Bash Linux</span>
+          <span class="tag tag-t">offensive</span>
+          <span class="tag tag-t">UWE Bristol</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥  CERTIFICATIONS -->
+<section id="certifications" class="wrap-alt">
+  <div class="wrap" style="padding-top:80px;padding-bottom:80px;">
+    <div class="sec-head r">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Certifications</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="cert-coming r">
+      <div class="cert-icon">🎯</div>
+      <div class="cert-title">Currently Building</div>
+      <div class="cert-sub">Actively working towards industry certifications<br>to complement my degree and practical skills.</div>
+      <div class="cert-targets">
+        <span class="cert-target">ISC2 CC — Next</span>
+        <span class="cert-target">CompTIA Security+</span>
+        <span class="cert-target">TryHackMe Paths</span>
+        <span class="cert-target">LinkedIn Learning Certs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦  INITIATIVES -->
+<section id="initiatives">
+  <div class="wrap">
+    <div class="sec-head r">
+      <span class="sec-num">06</span>
+      <h2 class="sec-title">Initiatives</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="init-card r">
+      <div class="init-logo">MSK<br>DAW</div>
+      <div>
+        <div class="init-name">MSKDAW</div>
+        <div class="init-handle">@mskdaw.2026 on Instagram</div>
+        <p class="init-desc">A cybersecurity awareness platform dedicated to simplifying complex security concepts for everyday people. We share practical tips, threat awareness, and educational content to help the public understand and navigate the digital world more safely.</p>
+        <div class="sk-tags" style="margin-bottom:12px;">
+          <span class="tag tag-g">Cyber Awareness</span>
+          <span class="tag tag-t">Education</span>
+          <span class="tag tag-t">Instagram</span>
+        </div>
+        <div class="init-collab">Co-founded with a fellow UWE Bristol student</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧  CONTACT -->
+<section id="contact" class="wrap-alt">
+  <div class="wrap" style="padding-top:80px;padding-bottom:80px;">
+    <div class="sec-head r">
+      <span class="sec-num">07</span>
+      <h2 class="sec-title">Contact</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-left r">
+        <div class="big">Let's <em>connect</em><br>and grow.</div>
+        <p>I'm open to graduate opportunities, internships, and conversations with people building interesting things — in the UK and beyond. Jakarta → Bristol → The World.</p>
+      </div>
+      <div class="contact-links r">
+        <a href="https://www.linkedin.com/in/yuttavio-ferdiandra-3a96712b9" target="_blank" rel="noopener noreferrer" class="cl">
+          <span class="cl-icon">🔗</span>
+          <div><div class="cl-label">LinkedIn</div><div class="cl-val">Yuttavio Ferdiandra</div></div>
+        </a>
+        <a href="https://github.com/FattanTech8" target="_blank" rel="noopener noreferrer" class="cl">
+          <span class="cl-icon">💻</span>
+          <div><div class="cl-label">GitHub</div><div class="cl-val">FattanTech8</div></div>
+        </a>
+        <a href="https://instagram.com/mskdaw.2026" target="_blank" rel="noopener noreferrer" class="cl">
+          <span class="cl-icon">📸</span>
+          <div><div class="cl-label">Instagram</div><div class="cl-val">@mskdaw.2026</div></div>
+        </a>
+        <a href="mailto:finder@gmail.com" class="cl">
+          <span class="cl-icon">✉️</span>
+          <div><div class="cl-label">Email</div><div class="cl-val">finder@gmail.com</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span class="g">Yuttavio Ferdiandra</span> · Jakarta → Bristol → The World</p>
+  <p>Built by Me and Claude</p>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('stuck', window.scrollY > 50);
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('on');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.r').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
