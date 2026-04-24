@@ -501,37 +501,99 @@
   .proj-desc { font-size: 11px; color: var(--dim); line-height: 1.72; max-width: 620px; margin-bottom: 16px; }
   .proj-tags { display: flex; gap: 7px; flex-wrap: wrap; }
 
-  /* ── CERTIFICATIONS ── */
-  .cert-coming {
-    border: 1px dashed var(--border2);
-    border-radius: 5px;
-    padding: 48px;
-    text-align: center;
+/* ── CERTIFICATIONS ── */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
   }
-  .cert-icon { font-size: 36px; margin-bottom: 16px; opacity: 0.35; }
-  .cert-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--mid);
-    margin-bottom: 8px;
+  .cert-card {
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
   }
-  .cert-sub { font-size: 10px; color: var(--dim); line-height: 1.7; }
-  .cert-targets {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 24px;
+  .cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
   }
-  .cert-target {
-    padding: 6px 14px;
-    border: 1px solid var(--border2);
-    border-radius: 2px;
+  .cert-card:hover {
+    border-color: var(--gold-m);
+    transform: translateY(-3px);
+  }
+  .cert-card-img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+    padding: 8px;
+    display: block;
+    border-bottom: 1px solid var(--border);
+  }
+  .cert-card-body { padding: 20px; }
+  .cert-card-issuer {
     font-size: 9px;
-    color: var(--dim);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
   }
+  .cert-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .cert-card-date {
+    font-size: 10px;
+    color: var(--dim);
+    margin-bottom: 14px;
+  }
+  .cert-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+  .cert-card-verify {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    padding: 7px 12px;
+    border: 1px solid var(--gold-m);
+    border-radius: 2px;
+    background: var(--gold-d);
+    transition: all 0.2s;
+  }
+  .cert-card-verify:hover {
+    background: var(--gold-m);
+    color: #090909;
+  }
+  .cert-progress {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px dashed var(--border2);
+    margin-top: 8px;
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .cert-progress span { color: var(--gold); opacity: 0.7; }
 
   /* ── INITIATIVES ── */
   .init-card {
@@ -723,19 +785,19 @@
 
       <div class="yr-label">Year 1 — Foundations</div>
       <div class="mods">
-        <span class="mod">Programming in C/C++</span>
-        <span class="mod">Introduction to Database</span>
-        <span class="mod">Computer Crime &amp; Digital Evidence</span>
-        <span class="mod">Computer &amp; Network Systems</span>
+        <span class="mod y3">Programming in C/C++</span>
+        <span class="mod y3">Introduction to Database</span>
+        <span class="mod y3">Computer Crime &amp; Digital Evidence</span>
+        <span class="mod y3">Computer &amp; Network Systems</span>
       </div>
 
       <div class="yr-label">Year 2 — Core Technical Skills</div>
       <div class="mods">
-        <span class="mod">Operating Systems</span>
-        <span class="mod">Secure Computer Networks</span>
-        <span class="mod">Security &amp; Forensic Tools</span>
-        <span class="mod">Internet of Things</span>
-        <span class="mod">Data Science for Cybersecurity</span>
+        <span class="mod y3">Operating Systems</span>
+        <span class="mod y3">Secure Computer Networks</span>
+        <span class="mod y3">Security &amp; Forensic Tools</span>
+        <span class="mod y3">Internet of Things</span>
+        <span class="mod y3">Data Science for Cybersecurity</span>
       </div>
 
       <div class="yr-label">Year 3 — Advanced &amp; Specialisation</div>
@@ -743,8 +805,8 @@
         <span class="mod y3">Cybersecurity Engineering</span>
         <span class="mod y3">Forensic Computing Practice</span>
         <span class="mod y3">Global Landscape of Cyber Security &amp; Adversaries</span>
-        <span class="mod active">Security Management in Practice ↗ In Progress</span>
-        <span class="mod active">Cybersecurity Project — Dissertation ↗ In Progress</span>
+        <span class="mod y3">Security Management in Practice ↗ In Progress</span>
+        <span class="mod active">Cybersecurity Project — Dissertation</span>
       </div>
     </div>
   </div>
@@ -883,17 +945,47 @@
       <h2 class="sec-title">Certifications</h2>
       <div class="sec-rule"></div>
     </div>
-    <div class="cert-coming r">
-      <div class="cert-icon">🎯</div>
-      <div class="cert-title">Currently Building</div>
-      <div class="cert-sub">Actively working towards industry certifications<br>to complement my degree and practical skills.</div>
-      <div class="cert-targets">
-        <span class="cert-target">ISC2 CC — Next</span>
-        <span class="cert-target">CompTIA Security+</span>
-        <span class="cert-target">TryHackMe Paths</span>
-        <span class="cert-target">LinkedIn Learning Certs</span>
+
+    <div class="cert-grid">
+
+      <!-- CERT CARD 1 — Google Cybersecurity -->
+      <div class="cert-card r">
+        <img
+          class="cert-card-img"
+          src="assets/images/certs/Google Cybersecurity_OWRFSYKWPQJX.jpeg"
+          alt="Google Cybersecurity Professional Certificate"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="cert-card-img-placeholder" style="display:none;">Certificate Image</div>
+        <div class="cert-card-body">
+          <div class="cert-card-issuer">Google &middot; Coursera</div>
+          <div class="cert-card-name">Google Cybersecurity Professional Certificate</div>
+          <div class="cert-card-date">Completed &middot; April 17, 2026 &middot; 9 Courses</div>
+          <div class="cert-card-tags">
+            <span class="tag tag-g">Security Concepts</span>
+            <span class="tag tag-g">SIEM</span>
+            <span class="tag tag-g">Linux</span>
+            <span class="tag tag-g">SQL</span>
+            <span class="tag tag-t">Python</span>
+            <span class="tag tag-t">Network Security</span>
+          </div>
+          <a
+            href="https://www.coursera.org/account/accomplishments/specialization/OWRFSYKWPQJX"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cert-card-verify"
+          >&#10003; Verify Certificate</a>
+        </div>
       </div>
+
+      <!-- ADD MORE CERT CARDS HERE — copy the block above and replace content -->
+      
     </div>
+
+    <div class="cert-progress r">
+      <span>More in progress</span>
+    </div>
+
   </div>
 </section>
 
@@ -940,9 +1032,9 @@
           <span class="cl-icon">🔗</span>
           <div><div class="cl-label">LinkedIn</div><div class="cl-val">Yuttavio Ferdiandra</div></div>
         </a>
-        <a href="https://github.com/FattanTech8" target="_blank" rel="noopener noreferrer" class="cl">
+        <a href="https://github.com/Mochabytee" target="_blank" rel="noopener noreferrer" class="cl">
           <span class="cl-icon">💻</span>
-          <div><div class="cl-label">GitHub</div><div class="cl-val">FattanTech8</div></div>
+          <div><div class="cl-label">GitHub</div><div class="cl-val">Mochabyte</div></div>
         </a>
         <a href="https://instagram.com/mskdaw1" target="_blank" rel="noopener noreferrer" class="cl">
           <span class="cl-icon">📸</span>
